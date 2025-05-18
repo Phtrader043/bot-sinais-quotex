@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Bot de Sinais</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; text-align: center; padding: 20px; }
+    .card { background: white; padding: 20px; margin: 20px auto; width: 300px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .call { color: green; font-weight: bold; }
+    .put { color: red; font-weight: bold; }
+    .aguardar { color: gray; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>📊 Painel de Sinais</h1>
+  <div class="card" id="sinal">
+    <p>Carregando sinal...</p>
+  </div>
+
+  <script>
+    async function carregarSinal() {
+      const res = await fetch("https://bot-sinais.onrender.com/sinal");
+      const dados = await res.json();
+
+      let classe = dados.tipo === "CALL" ? "call" : dados.tipo === "PUT" ? "put" : "aguardar";
+
+      document.getElementById("sinal").innerHTML = `
+        <h2>${dados.ativo}</h2>
+        <p>Recomendação: <span class="${classe}">${dados.tipo}</span></p>
+        <p>Força: ${dados.recomendacao}</p>
+        <p>RSI: ${dados.rsi}</p>
+      `;
+    }
+
+    carregarSinal();
+    setInterval(carregarSinal, 300000); // Atualiza a cada 5 minutos
+  </script>
+</body>
+</html>
