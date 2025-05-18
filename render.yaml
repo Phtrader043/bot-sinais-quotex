@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: bot-sinais
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
+    envVars:
+      - key: TELEGRAM_TOKEN
+        value: SEU_TOKEN
+      - key: TELEGRAM_CHAT_ID
+        value: SEU_CHAT_ID
+      - key: TWILIO_SID
+        value: SEU_SID
+      - key: TWILIO_AUTH_TOKEN
+        value: SEU_AUTH_TOKEN
+      - key: TWILIO_FROM
+        value: whatsapp:+14155238886
+      - key: WHATSAPP_TO
+        value: whatsapp:+SEU_NUMERO
+        
